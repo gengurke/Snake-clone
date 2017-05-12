@@ -31,7 +31,7 @@ var game = (function () {
             console.log("Tick, now drawing with: " + FPS + "fps!");
             // draw and check collisions here...
         }
-	}
+}
 
 	// Setzt den Canvas und dessen Context als Variablen
 	function privateSetContext(canvas) {
@@ -42,6 +42,8 @@ var game = (function () {
     /* Todo: Call this function only after player has pressed the start key */
     function privateStartGame() {
         /* Todo: initialize objects (i.e. apple, snake, counter) here */
+
+        iniSnake(15, 15, privateContext, RASTER_SIZE);
         window.requestAnimationFrame(privateDraw);
     }
 
