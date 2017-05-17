@@ -13,7 +13,7 @@ var game = (function () {
     var counter;
     
     /* Variables and constants to control framerate */
-    var FPS = 10; /* change this to change framerate in the game */
+    var FPS = 3; /* change this to change framerate in the game */
     var now;
     var then = Date.now();
     var interval = 1000/FPS;
@@ -49,7 +49,7 @@ var game = (function () {
     
     /* Todo: Call this function only after player has pressed the start key */
     function privateStartGame() {
-        /* Todo: initialize objects (i.e. apple, snake, counter) here */
+        /* Todo: initialize objects (counter) here */
 
         //JQuery Integration
         privateCanvas.setAttribute('tabindex', '0');
@@ -112,11 +112,21 @@ var game = (function () {
         return apple;
     }
 
+    function publicGameWidth() {
+        return GAME_WIDTH;
+    }
+    function publicGameHeight() {
+        return GAME_HEIGHT;
+    }
+
     return {
 		init: publicInit,
+        gameW: publicGameWidth,
+        gameH: publicGameHeight,
         rndXPos: publicRandomXCanvasPosition,
         rndYPos: publicRandomYCanvasPosition,
         gameApple: gameApple
+
     };
 
 })();

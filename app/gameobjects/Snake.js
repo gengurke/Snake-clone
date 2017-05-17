@@ -6,6 +6,7 @@ var Snake = function(x, y, context, rasterSize) {
     this.context = context;
     this.rasterSize = rasterSize;
     this.direction = "right";
+    
 
     this.SnakeArray = [];
 };
@@ -38,7 +39,9 @@ function iniSnake(x, y, context, rasterSize) {
 
 Snake.prototype.update = function () {
     this.positionUpdate();
+    this.wallCollision();
     this.selfCollsisonUpdate();
+
     //If Apple is eaten last Snake Element is not poped
     if(!this.isAppleEaten()) {
         this.SnakeArray.pop();
@@ -65,20 +68,31 @@ Snake.prototype.positionUpdate = function () {
     }
 };
 
-
+//ToDO - Fix bug at start (sake does not move)
 Snake.prototype.selfCollsisonUpdate = function () {
     var i;
     for(i = 1; i < this.SnakeArray.length; i++) {
         if(this.SnakeArray[0].xPos === this.SnakeArray[i].xPos && this.SnakeArray[0].yPos === this.SnakeArray[i].yPos) {
-            this.xPos = 1;
-            this.yPos = 1;
+            //ToDo - replace with game over
+            this.xPos = 15;
+            this.yPos = 15;
         }
     }
 };
-
+//Returns True if Apple is eaten and sets it to a random position
 Snake.prototype.isAppleEaten = function () {
         if(this.SnakeArray[0].xPos === game.gameApple().xPos && this.SnakeArray[0].yPos === game.gameApple().yPos) {
             game.gameApple().positionReset();
+            //ToDo - add points
+            return true;
+        }
+};
+
+Snake.prototype.wallCollision = function () {
+        if(this.SnakeArray[0].xPos >= (game.gameW()) || this.SnakeArray[0].yPos >= (game.gameH()) ||
+            this.SnakeArray[0].yPos < 0 || this.SnakeArray[0].xPos < 0) {
+            //ToDo - replace with game over
+
             return true;
         }
 };
