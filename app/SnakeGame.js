@@ -13,7 +13,7 @@ var game = (function () {
     var counter;
     
     /* Variables and constants to control framerate */
-    var FPS = 1; /* change this to change framerate in the game */
+    var FPS = 10; /* change this to change framerate in the game */
     var now;
     var then = Date.now();
     var interval = 1000/FPS;
@@ -35,11 +35,11 @@ var game = (function () {
             snake.update();
             privateContext.clearRect(0, 0, GAME_WIDTH, GAME_HEIGHT);
             snake.drawSnake();
-
+            apple.update();
         }
 
 
-}
+    }
 
 	// Setzt den Canvas und dessen Context als Variablen
 	function privateSetContext(canvas) {
@@ -57,9 +57,9 @@ var game = (function () {
         $(document).ready(function(){
             $("canvas").keydown(getInput);
         });
-        
-        snake = iniSnake(15, 15, privateContext, RASTER_SIZE);
 
+        snake = iniSnake(15, 15, privateContext, RASTER_SIZE);
+        apple = iniApple(privateContext, RASTER_SIZE);
         window.requestAnimationFrame(privateDraw);
     }
 
@@ -76,7 +76,6 @@ var game = (function () {
 	}
 
 	function getInput(pressedKeyEvent) {
-        console.log(pressedKeyEvent.key);
         switch (pressedKeyEvent.key) {
             case "w":
             case"ArrowUp":
@@ -100,8 +99,24 @@ var game = (function () {
         }
     }
 
-	return {
-		init: publicInit
+
+    //Functions to determine random XY positions on the canvas grid
+    function publicRandomXCanvasPosition() {
+        return Math.floor(Math.random() * (GAME_WIDTH / RASTER_SIZE));
+    }
+    function publicRandomYCanvasPosition() {
+        return Math.floor(Math.random() * (GAME_HEIGHT / RASTER_SIZE));
+    }
+
+    function gameApple(){
+        return apple;
+    }
+
+    return {
+		init: publicInit,
+        rndXPos: publicRandomXCanvasPosition,
+        rndYPos: publicRandomYCanvasPosition,
+        gameApple: gameApple
     };
 
 })();
