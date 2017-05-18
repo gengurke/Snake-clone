@@ -6,7 +6,7 @@ var Snake = function(x, y, context, rasterSize) {
     this.context = context;
     this.rasterSize = rasterSize;
     this.direction = "right";
-    
+    this.lastDirection = "right";
 
     this.SnakeArray = [];
 };
@@ -46,6 +46,7 @@ Snake.prototype.update = function () {
     if(!this.isAppleEaten()) {
         this.SnakeArray.pop();
     }
+    this.lastDirection = this.direction;
 };
 
 

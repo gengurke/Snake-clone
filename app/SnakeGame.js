@@ -79,18 +79,22 @@ var game = (function () {
         switch (pressedKeyEvent.key) {
             case "w":
             case"ArrowUp":
+                if(!(snake.lastDirection === "down"))
                 snake.direction = "up";
                 break;
             case "d":
             case "ArrowRight":
+                if(!(snake.lastDirection === "left"))
                 snake.direction = "right";
                 break;
             case "s":
             case "ArrowDown":
+                if(!(snake.lastDirection === "up"))
                 snake.direction = "down";
                 break;
             case "a":
             case "ArrowLeft":
+                if(!(snake.lastDirection === "right"))
                 snake.direction = "left";
                 break;
             default:
