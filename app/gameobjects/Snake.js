@@ -1,6 +1,6 @@
 /* The snake in the game */
 
-var Snake = function(x, y, context, rasterSize) {
+var Snake = function (x, y, context, rasterSize) {
     this.xPos = x;
     this.yPos = y;
     this.context = context;
@@ -9,20 +9,6 @@ var Snake = function(x, y, context, rasterSize) {
     this.lastDirection = "right";
 
     this.SnakeArray = [];
-};
-
-
-
-Snake.prototype.drawSnake = function() {
-    var i;
-
-    for (i = 0; i < this.SnakeArray.length; i++) {
-        this.SnakeArray[i].drawSnakeElement();
-    }
-};
-
-Snake.prototype.addSnakeElement = function (x, y, context, rasterSize) {
-    this.SnakeArray.unshift(new SnakeElement(x, y, context, rasterSize));
 };
 
 function iniSnake(x, y, context, rasterSize) {
@@ -35,22 +21,34 @@ function iniSnake(x, y, context, rasterSize) {
     return snake;
 }
 
+Snake.prototype.drawSnake = function () {
+    var i;
+
+    for (i = 0; i < this.SnakeArray.length; i++) {
+        this.SnakeArray[i].drawSnakeElement();
+    }
+};
+
+Snake.prototype.addSnakeElement = function (x, y, context, rasterSize) {
+    this.SnakeArray.unshift(new SnakeElement(x, y, context, rasterSize));
+};
+
 Snake.prototype.update = function () {
     this.positionUpdate();
     this.wallCollision();
     this.selfCollsisonUpdate();
 
     //If Apple is eaten last Snake Element is not poped
-    if(!this.isAppleEaten()) {
+    if (!this.isAppleEaten()) {
         this.SnakeArray.pop();
     }
     //helps prevent the snake from turning back
     this.lastDirection = this.direction;
+    this.drawSnake();
 };
 
-
 Snake.prototype.positionUpdate = function () {
-    switch(this.direction){
+    switch (this.direction) {
         case "right":
             this.addSnakeElement(++this.xPos, this.yPos, this.context, this.rasterSize);
             break;
@@ -68,33 +66,30 @@ Snake.prototype.positionUpdate = function () {
     }
 };
 
-//ToDO - Fix bug at start (sake does not move)
 Snake.prototype.selfCollsisonUpdate = function () {
     var i;
-    for(i = 1; i < this.SnakeArray.length; i++) {
-        if(this.SnakeArray[0].xPos === this.SnakeArray[i].xPos && this.SnakeArray[0].yPos === this.SnakeArray[i].yPos) {
-            //ToDo - replace with game over
-            this.xPos = 15;
-            this.yPos = 15;
+    for (i = 4; i < this.SnakeArray.length; i++) {
+        if (this.SnakeArray[0].xPos === this.SnakeArray[i].xPos && this.SnakeArray[0].yPos === this.SnakeArray[i].yPos) {
+            game.replay();
         }
     }
 };
+
 //Returns True if Apple is eaten and sets it to a random position
 Snake.prototype.isAppleEaten = function () {
-        if(this.SnakeArray[0].xPos === game.gameApple().xPos && this.SnakeArray[0].yPos === game.gameApple().yPos) {
-            game.gameApple().positionReset();
-            game.gameScore().addPoints(9);
-            return true;
-        }
+    if (this.SnakeArray[0].xPos === game.gameApple().xPos && this.SnakeArray[0].yPos === game.gameApple().yPos) {
+        game.gameApple().positionReset();
+        game.gameScore().addPoints(9);
+        return true;
+    }
 };
 
 Snake.prototype.wallCollision = function () {
-        if(this.SnakeArray[0].xPos >= (game.gameW()) || this.SnakeArray[0].yPos >= (game.gameH()) ||
-            this.SnakeArray[0].yPos < 0 || this.SnakeArray[0].xPos < 0) {
-            //ToDo - replace with game over
-
-            return true;
-        }
+    if (this.SnakeArray[0].xPos >= (game.gameW()) || this.SnakeArray[0].yPos >= (game.gameH()) ||
+        this.SnakeArray[0].yPos < 0 || this.SnakeArray[0].xPos < 0) {
+        game.replay();
+        return true;
+    }
 };
 
 

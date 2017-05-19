@@ -1,6 +1,6 @@
 /* The Counter in the game */
 
-var Counter = function(context, rasterSize) {
+var Counter = function (context, rasterSize) {
     this.xPos = 10 * rasterSize;
     this.yPos = 5 * rasterSize;
     this.context = context;
@@ -9,8 +9,8 @@ var Counter = function(context, rasterSize) {
 };
 
 function iniCounter(context, rasterSize) {
-    Counter = new Counter(context, rasterSize);
-    return Counter;
+    counter = new Counter(context, rasterSize);
+    return counter;
 }
 
 Counter.prototype.draw = function () {
@@ -27,3 +27,10 @@ Counter.prototype.addPoints = function (addpoints) {
     this.counter += addpoints;
 };
 
+Counter.prototype.getCounter = function () {
+    return this.counter;
+}
+
+Counter.prototype.cntReset = function () {
+    this.counter = 0;
+};
