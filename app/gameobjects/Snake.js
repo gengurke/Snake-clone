@@ -19,7 +19,6 @@ Snake.prototype.drawSnake = function() {
     for (i = 0; i < this.SnakeArray.length; i++) {
         this.SnakeArray[i].drawSnakeElement();
     }
-
 };
 
 Snake.prototype.addSnakeElement = function (x, y, context, rasterSize) {
@@ -27,7 +26,6 @@ Snake.prototype.addSnakeElement = function (x, y, context, rasterSize) {
 };
 
 function iniSnake(x, y, context, rasterSize) {
-
     snake = new Snake(x, y, context, rasterSize);
 
     snake.addSnakeElement(++x, y, context, rasterSize);
@@ -46,6 +44,7 @@ Snake.prototype.update = function () {
     if(!this.isAppleEaten()) {
         this.SnakeArray.pop();
     }
+    //helps prevent the snake from turning back
     this.lastDirection = this.direction;
 };
 
@@ -84,7 +83,7 @@ Snake.prototype.selfCollsisonUpdate = function () {
 Snake.prototype.isAppleEaten = function () {
         if(this.SnakeArray[0].xPos === game.gameApple().xPos && this.SnakeArray[0].yPos === game.gameApple().yPos) {
             game.gameApple().positionReset();
-            //ToDo - add points
+            game.gameScore().addPoints(9);
             return true;
         }
 };

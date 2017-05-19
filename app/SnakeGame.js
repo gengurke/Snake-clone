@@ -11,6 +11,7 @@ var game = (function () {
 	var snake;
     var apple;
     var counter;
+    var play = false;
     
     /* Variables and constants to control framerate */
     var FPS = 3; /* change this to change framerate in the game */
@@ -36,6 +37,7 @@ var game = (function () {
             privateContext.clearRect(0, 0, GAME_WIDTH, GAME_HEIGHT);
             snake.drawSnake();
             apple.update();
+            counter.update();
         }
 
 
@@ -51,6 +53,21 @@ var game = (function () {
     function privateStartGame() {
         /* Todo: initialize objects (counter) here */
 
+
+
+
+
+        snake = iniSnake(15, 15, privateContext, RASTER_SIZE);
+        apple = iniApple(privateContext, RASTER_SIZE);
+        counter = iniCounter(privateContext,RASTER_SIZE);
+        window.requestAnimationFrame(privateDraw);
+    }
+
+	function publicInit(canvas) {
+        GAME_HEIGHT = canvas.height;
+        GAME_WIDTH = canvas.width;
+        privateSetContext(canvas);
+
         //JQuery Integration
         privateCanvas.setAttribute('tabindex', '0');
         privateCanvas.focus();
@@ -58,21 +75,8 @@ var game = (function () {
             $("canvas").keydown(getInput);
         });
 
-        snake = iniSnake(15, 15, privateContext, RASTER_SIZE);
-        apple = iniApple(privateContext, RASTER_SIZE);
-        window.requestAnimationFrame(privateDraw);
-    }
 
-	function publicInit(canvas) {
-		GAME_HEIGHT = canvas.height;
-        GAME_WIDTH = canvas.width;
-
-
-
-        privateSetContext(canvas);
         privateStartGame();
-
-
 	}
 
 	function getInput(pressedKeyEvent) {
@@ -123,13 +127,18 @@ var game = (function () {
         return GAME_HEIGHT;
     }
 
+    function gameScore() {
+        return counter;
+    }
+
     return {
 		init: publicInit,
         gameW: publicGameWidth,
         gameH: publicGameHeight,
         rndXPos: publicRandomXCanvasPosition,
         rndYPos: publicRandomYCanvasPosition,
-        gameApple: gameApple
+        gameApple: gameApple,
+        gameScore: gameScore
 
     };
 
