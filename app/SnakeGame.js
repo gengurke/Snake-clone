@@ -10,6 +10,7 @@ var game = (function () {
 
     var snake;
     var apple;
+    var poisonapple;
     var counter;
     var playing = false;
 
@@ -38,6 +39,7 @@ var game = (function () {
                 privateContext.clearRect(0, 0, GAME_WIDTH, GAME_HEIGHT);
                 snake.update();
                 apple.update();
+                poisonapple.update();
                 counter.update();
             } else {
                 publicReplayScreen();
@@ -61,6 +63,7 @@ var game = (function () {
 
         snake = iniSnake(15, 15, privateContext, RASTER_SIZE);
         apple = iniApple(privateContext, RASTER_SIZE);
+        poisonapple = iniApple2(privateContext, RASTER_SIZE);
         counter = iniCounter(privateContext, RASTER_SIZE);
         var sound = document.getElementById("main");
         sound.play();
@@ -148,6 +151,10 @@ var game = (function () {
         return apple;
     }
 
+    function gameApple2() {
+        return poisonapple;
+    }
+
     function publicGameWidth() {
         return GAME_WIDTH;
     }
@@ -167,8 +174,10 @@ var game = (function () {
         rndXPos: publicRandomXCanvasPosition,
         rndYPos: publicRandomYCanvasPosition,
         gameApple: gameApple,
+        gameApple2: gameApple2,
         gameScore: gameScore,
         replay: publicReplayScreen
+
 
     };
 

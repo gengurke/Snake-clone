@@ -41,7 +41,11 @@ Snake.prototype.update = function () {
     //If Apple is eaten last Snake Element is not poped
     if (!this.isAppleEaten()) {
         this.SnakeArray.pop();
+
     }
+
+    this.isApple2Eaten();
+
     //helps prevent the snake from turning back
     this.lastDirection = this.direction;
     this.drawSnake();
@@ -84,6 +88,14 @@ Snake.prototype.isAppleEaten = function () {
     if (this.SnakeArray[0].xPos === game.gameApple().xPos && this.SnakeArray[0].yPos === game.gameApple().yPos) {
         game.gameApple().positionReset();
         game.gameScore().addPoints(9);
+        return true;
+    }
+};
+
+Snake.prototype.isApple2Eaten = function () {
+    if (this.SnakeArray[0].xPos === game.gameApple2().xPos && this.SnakeArray[0].yPos === game.gameApple2().yPos) {
+        game.gameApple2().positionReset();
+        game.gameScore().addPoints(-9);
         return true;
     }
 };
