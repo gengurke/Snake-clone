@@ -62,6 +62,8 @@ var game = (function () {
         snake = iniSnake(15, 15, privateContext, RASTER_SIZE);
         apple = iniApple(privateContext, RASTER_SIZE);
         counter = iniCounter(privateContext, RASTER_SIZE);
+        var sound = document.getElementById("main");
+        sound.play();
         window.requestAnimationFrame(privateDraw);
     }
 

@@ -70,6 +70,10 @@ Snake.prototype.selfCollsisonUpdate = function () {
     var i;
     for (i = 4; i < this.SnakeArray.length; i++) {
         if (this.SnakeArray[0].xPos === this.SnakeArray[i].xPos && this.SnakeArray[0].yPos === this.SnakeArray[i].yPos) {
+            //Game Over sound
+            var sound = document.getElementById("gameover");
+            sound.play();
+
             game.replay();
         }
     }
@@ -87,6 +91,10 @@ Snake.prototype.isAppleEaten = function () {
 Snake.prototype.wallCollision = function () {
     if (this.SnakeArray[0].xPos >= (game.gameW()) || this.SnakeArray[0].yPos >= (game.gameH()) ||
         this.SnakeArray[0].yPos < 0 || this.SnakeArray[0].xPos < 0) {
+        //Game Over sound
+        var sound = document.getElementById("gameover");
+        sound.play();
+
         game.replay();
         return true;
     }
