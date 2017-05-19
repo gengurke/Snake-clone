@@ -11,7 +11,7 @@ var game = (function () {
 	var snake;
     var apple;
     var counter;
-    var play = false;
+    var playing = false;
     
     /* Variables and constants to control framerate */
     var FPS = 3; /* change this to change framerate in the game */
@@ -49,10 +49,12 @@ var game = (function () {
 		privateContext = canvas.getContext("2d");
 	}
     
-    /* Todo: Call this function only after player has pressed the start key */
-    function privateStartGame() {
-        /* Todo: initialize objects (counter) here */
 
+    function privateStartGame() {
+        //Brings the canvas to focus for later input
+        privateCanvas.setAttribute('tabindex', '0');
+        privateCanvas.focus();
+        $("canvas").keydown(getInput);
 
 
 
@@ -67,16 +69,7 @@ var game = (function () {
         GAME_HEIGHT = canvas.height;
         GAME_WIDTH = canvas.width;
         privateSetContext(canvas);
-
-        //JQuery Integration
-        privateCanvas.setAttribute('tabindex', '0');
-        privateCanvas.focus();
-        $(document).ready(function(){
-            $("canvas").keydown(getInput);
-        });
-
-
-        privateStartGame();
+        privateStartGameOnKeypress(32);
 	}
 
 	function getInput(pressedKeyEvent) {
@@ -105,6 +98,22 @@ var game = (function () {
                 break;
 
         }
+    }
+
+
+    function privateStartGameOnKeypress(keyCode) {
+        //Starts game only if spacebar is pressed
+        $(document).keydown(function (e) {
+            if (e.keyCode === keyCode) {
+                playing = true;
+                privateStartGame();
+            }
+        });
+
+        //Prompt before the game
+        privateContext.font = "20px Arial";
+        privateContext.fillStyle = '#'+(Math.random()*0xFFFFFF<<0).toString(16);
+        privateContext.fillText("Press Spacebar to begin! ", 4 * RASTER_SIZE, 15 * RASTER_SIZE);
     }
 
 
